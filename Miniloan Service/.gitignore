@@ -1,0 +1,7 @@
+# Deployment reports
+*.html
+
+# Package files
+*.dsar
+
+/reports/

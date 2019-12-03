@@ -1,0 +1,25 @@
+use loan;
+
+
+flowtask miniloan {
+  property mainflowtask = false;
+  property ilog.rules.business_name = "miniloan";
+  property ilog.rules.package_name = "";
+  finalaction {
+    ilog.rules.brl.System.printMessage(loan.approvalStatus);
+  };
+  body {
+    miniloan#eligibility;
+  }
+};
+
+ruletask miniloan#eligibility {
+  property ilog.rules.business_name = "miniloan>eligibility";
+  property ilog.rules.package_name = "";
+  algorithm = default;
+  ordering = dynamic;
+  body {
+    eligibility.*
+  }
+};
+

@@ -1,0 +1,17 @@
+package eligibility {
+   use loan;
+   use borrower;
+   rule min_income {
+      property ilog.rules.business_name = "min income";
+      property ilog.rules.package_name = "eligibility";
+      property status = "new";
+      when {
+         miniloan.Loan() from loan;
+         miniloan.Borrower() from borrower;
+         evaluate ((double) loan.yearlyRepayment  > (double) borrower.yearlyIncome  * 0.3d);
+      } then {
+         loan.reject("DTI ratio over limit");
+      }
+   }
+}
+

@@ -1,0 +1,19 @@
+package eligibility {
+use loan;
+use borrower;
+
+rule complications {
+property status = "new";
+when {
+	?b: miniloan.Borrower(creditScore < 550) from borrower;
+	evaluate(loan.yearlyRepayment > borrower.yearlyIncome * 0.3; borrower.creditScore >= 850; !(?b.yearlyIncome > 25000));
+	evaluate(loan.rates.length > 3);
+}
+then {
+	loan.reject("DTI ratio over limit");
+	loan.amount = ?b.yearlyIncome / 2;
+}
+
+
+}
+}

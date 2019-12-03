@@ -1,0 +1,4 @@
+variables {
+  miniloan.Borrower borrower;
+  miniloan.Loan loan;
+}

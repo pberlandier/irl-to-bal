@@ -1,0 +1,15 @@
+package eligibility {
+use loan;
+use borrower;
+
+rule min_income_trl1 {
+property status = "new";
+when {
+	?b: miniloan.Borrower() from borrower;
+	?l: miniloan.Loan(yearlyRepayment > ?b.yearlyIncome * 0.3) from loan;
+}
+then {
+	?l.reject("DTI ratio over limit");
+}
+}
+}

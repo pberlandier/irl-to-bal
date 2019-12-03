@@ -1,0 +1,17 @@
+package confection {
+   use loan;
+   use borrower;
+   rule min$_$income$_$trl1_as_BAL {
+      property ilog.rules.business_name = "min_income_trl1 as BAL";
+      property ilog.rules.package_name = "confection";
+      property status = "new";
+      when {
+         miniloan.Loan() from loan;
+         miniloan.Borrower() from borrower;
+         evaluate ((double) loan.yearlyRepayment  > (double) borrower.yearlyIncome  * 0.3d);
+      } then {
+         loan.reject("DTI ratio over limit");
+      }
+   }
+}
+

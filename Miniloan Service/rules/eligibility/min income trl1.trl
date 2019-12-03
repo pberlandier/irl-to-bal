@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.irl:IRLRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.irl="http://ilog.rules.studio/model/irl.ecore">
+  <name>min income trl1</name>
+  <uuid>05568f6d-01c0-4f67-beb9-34657f4c929c</uuid>
+  <definition><![CDATA[when {
+	?b: miniloan.Borrower() from borrower;
+	?l: miniloan.Loan(yearlyRepayment > ?b.yearlyIncome * 0.3) from loan;
+}
+then {
+	?l.reject("DTI ratio over limit");
+}]]></definition>
+  <imports><![CDATA[use loan;]]></imports>
+  <imports><![CDATA[use borrower;]]></imports>
+</ilog.rules.studio.model.irl:IRLRule>

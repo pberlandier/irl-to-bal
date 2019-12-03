@@ -1,0 +1,22 @@
+package confection {
+   use borrower;
+   use loan;
+   rule complications_as_BAL {
+      property ilog.rules.business_name = "complications as BAL";
+      property ilog.rules.package_name = "confection";
+      property status = "new";
+      when {
+         miniloan.Borrower() from borrower;
+         miniloan.Loan() from loan;
+         evaluate (((((borrower.creditScore < 550
+         	&& (double) loan.yearlyRepayment  > (double) borrower.yearlyIncome  * 0.3d)
+         	&& borrower.creditScore >= 850)
+         	&& !(borrower.yearlyIncome > 25000))
+         	&& ilog.rules.brl.IlrCollectionUtil.getSize(loan.rates) > 3));
+      } then {
+         loan.reject("DTI ratio over limit");
+         loan.amount = (int)(borrower.yearlyIncome / 2);
+      }
+   }
+}
+

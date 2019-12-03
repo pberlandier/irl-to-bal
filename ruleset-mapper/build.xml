@@ -1,0 +1,42 @@
+<project name="Ruleset Mapper" default="jar" basedir=".">
+	<property file="${basedir}/build.properties" />
+
+	<property name="project.dir" value="${basedir}" />
+	<property name="build.dir" value="${project.dir}/bin/src" />
+	<property name="src.dir" value="${project.dir}/src" />
+	<property name="dist.dir" value="${project.dir}/dist" />
+
+	<path id="compile.classpath">
+		<fileset dir="${jrules.home}/studio/lib" includes="jrules-engine.jar" />
+		<fileset dir="${jrules.home}/studio/lib" includes="commons-beanutils.jar" />
+		<fileset dir="${jrules.home}/studio/lib" includes="commons-logging.jar" />
+		<fileset dir="${jrules.home}/executionserver/lib" includes="log4j*.jar" />
+		<pathelement location="${build.dir}" />
+	</path>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="init" depends="clean">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+	
+	<target name="compile" depends="init">
+		<javac destdir="${build.dir}" debug="true" deprecation="on" includes="**/*.java" encoding="utf-8" optimize="on" source="1.6" target="1.6">
+			<src path="${src.dir}" />
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar destfile="${dist.dir}/${jar.name}" basedir="${build.dir}"/>
+	</target>
+
+	<target name="dist" depends="jar">
+		<copy file="${dist.dir}/${jar.name}" todir="${basedir}/../ruleset-diagrammer/lib"/>
+	</target>
+
+</project>
