@@ -27,9 +27,10 @@ To test the translation, edit the `input.properties` file with the path to the d
 You can then run the main function of class `RulesetMapRunner`. The translated rules will be generated in the rule folder designated by the `confection.path` property.
 
 ## Limitations
-There are many and this POC is far, far from complete and being usable on a production project.
+There are many, and this POC is far, far from complete and being usable on a production project.
+As mentioned in the *Usage* section, the input to the translation takes a single vocabulary and ruleset variable files. Complex projects will likely have multiple of these. Also, in it's current state, a number of IRL language statements are not handled (the explore method for these statements just return `null`).
 
-Technical rules allow the use of e.g. `for`, `while`, `if`, `try/catch/throw` statements in the action part of the rules. It is not possible to include these statements in the expression of BAL rules.
+More importantly, technical rules allow the use of e.g. `for`, `while`, `if`, `try/catch/throw` statements in the action part of the rules. It is not possible to include these statements in the expression of BAL rules.
 
 One possible solution to alleviate this limitation is to dynamically create ODM functions that encapsulate the actions that use these type of statements, verbalize these functions and use the verbalization in the BAL rules.
 
